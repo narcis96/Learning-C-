@@ -1,0 +1,6 @@
+D:\Learning-CSharp\Threads\Threads\bin\Release\Threads.exe.config
+D:\Learning-CSharp\Threads\Threads\bin\Release\Threads.exe
+D:\Learning-CSharp\Threads\Threads\bin\Release\Threads.pdb
+D:\Learning-CSharp\Threads\Threads\obj\Release\Threads.csprojResolveAssemblyReference.cache
+D:\Learning-CSharp\Threads\Threads\obj\Release\Threads.exe
+D:\Learning-CSharp\Threads\Threads\obj\Release\Threads.pdb

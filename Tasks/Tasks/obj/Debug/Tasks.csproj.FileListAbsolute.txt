@@ -1,0 +1,6 @@
+D:\Learning-CSharp\Tasks\Tasks\bin\Debug\Tasks.exe.config
+D:\Learning-CSharp\Tasks\Tasks\bin\Debug\Tasks.exe
+D:\Learning-CSharp\Tasks\Tasks\bin\Debug\Tasks.pdb
+D:\Learning-CSharp\Tasks\Tasks\obj\Debug\Tasks.csprojResolveAssemblyReference.cache
+D:\Learning-CSharp\Tasks\Tasks\obj\Debug\Tasks.exe
+D:\Learning-CSharp\Tasks\Tasks\obj\Debug\Tasks.pdb
