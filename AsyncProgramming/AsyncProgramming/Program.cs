@@ -12,6 +12,7 @@ namespace AsyncProgramming
     {
         static async Task<string> ReadAsync(string filename)
         {
+            await Task.Delay(2000);
             using (FileStream SourceStream = File.Open(filename, FileMode.Open))
             {
                 long length = SourceStream.Length;
@@ -28,17 +29,17 @@ namespace AsyncProgramming
 
         static void Main(string[] args)
         {
-/*            Task<string> task = Program.ReadAsync(args[1]);
+           Task<string> task = Program.ReadAsync(args[0]);
 
             int threadID = Thread.CurrentThread.ManagedThreadId;
-            Console.WriteLine(threadID);*/
-
-
-            /*.ContinueWith( (previous) =>
+            Console.WriteLine(threadID);
+            task.ContinueWith( (previous) =>
             {
-                string x = previous.Result;
-
-            });*/
+                string result = previous.Result;
+                Console.WriteLine(result);
+            });
+            Console.WriteLine(threadID);
+            task.Wait();
         }
     }
 }
