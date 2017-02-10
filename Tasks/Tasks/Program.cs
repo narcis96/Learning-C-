@@ -38,10 +38,11 @@ namespace Tasks
 
             Action finishDirectoryTask = () =>
             {
-                Task<string[]> taskListDiretories = Task.Run(() =>
+                Func<string[]> funcListDiretories = () =>
                 {
                     return Directory.GetDirectories(path);
-                });
+                };
+                Task<string[]> taskListDiretories = Task.Run(funcListDiretories);
                 taskListDiretories.ContinueWith((antecedent) =>
                 {
                     string[] directories = antecedent.Result;
