@@ -17,43 +17,32 @@ namespace Tasks
         static ArrayList listFiles = new ArrayList();
         static void ListDiretories(String path)
         {
-            Action finishFilesTask = () =>
+            Task[] tasks = new Task[2];
+            tasks[0] = Task.Run(() =>
             {
-                Task<string[]> taskListFiles = Task.Run(() =>
+                int threadID = Thread.CurrentThread.ManagedThreadId;
+                Console.WriteLine(threadID + " task[0]");
+                string[] files = Directory.GetFiles(path);
+                foreach (string file in files)
                 {
-                    return Directory.GetFiles(path);
-                });
-                taskListFiles.ContinueWith((antecedent) =>
-                {
-                    string[] files = antecedent.Result;
-                    foreach (string file in files)
+                    Console.WriteLine(file);
+                    lock (listFiles.SyncRoot)
                     {
-                        lock (listFiles.SyncRoot)
-                        {
-                            listFiles.Add(file);
-                        }
+                        listFiles.Add(file);
                     }
-                }).Wait();
-            };
-
-            Action finishDirectoryTask = () =>
+                }
+            });
+            tasks[1] = Task.Run(() =>
             {
-                Func<string[]> funcListDiretories = () =>
+                int threadID = Thread.CurrentThread.ManagedThreadId;
+                Console.WriteLine(threadID + " task[1]");
+                string[] directories = Directory.GetDirectories(path);
+                foreach (string directory in directories)
                 {
-                    return Directory.GetDirectories(path);
-                };
-                Task<string[]> taskListDiretories = Task.Run(funcListDiretories);
-                taskListDiretories.ContinueWith((antecedent) =>
-                {
-                    string[] directories = antecedent.Result;
-                    foreach (string directory in directories)
-                    {
-                        ListDiretories(directory);
-                    }
-                }).Wait();
-            };
-
-            Parallel.Invoke(finishFilesTask, finishDirectoryTask);
+                    ListDiretories(directory);
+                }
+            });
+            Task.WaitAll(tasks);
         }
 
         static void Main(string[] args)
@@ -65,10 +54,15 @@ namespace Tasks
                 Console.WriteLine(file);
             }
             Action doStuff = DoStuff;
-            Func<int> getOne = () => 1;
+            Func<int> getOne = () => 
+            {
+                return 2 + 1;
+            };
 
-            Func<int, int, string> convertIntToString = (i, j) => 
-            i.ToString() + " + " + j.ToString()+ " = " + (i + j).ToString();
+            Func<int, int, string> convertIntToString = (i, j) =>
+            {
+                return i.ToString() + " + " + j.ToString() + " = " + (i + j).ToString();
+            };
 
             Action<string> printToScreen = s => 
             {
