@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-
-namespace CSharpTest
+namespace SampleClasses
 {
-    class Helper
+    class Helper:IDisposable
     {
         public Helper()
         {
@@ -22,20 +20,10 @@ namespace CSharpTest
 
             Console.WriteLine("Helper::DoStuff");
         }
-    }
 
-    class Program
-    {
-
-        static void Func(ref int x)
+        public void Dispose()
         {
-            x = 0;
-        }
-        static void Main(string[] args)
-        {
-            int x = 2;
-            Func(ref x);
-            Console.WriteLine(x);
+            Console.WriteLine("Helper::Dispose");
         }
     }
 }
