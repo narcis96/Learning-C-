@@ -22,25 +22,34 @@ namespace Tasks
             {
                 int threadID = Thread.CurrentThread.ManagedThreadId;
                 Console.WriteLine(threadID + " task[0]");
-                string[] files = Directory.GetFiles(path);
-                foreach (string file in files)
+                try
                 {
-                    Console.WriteLine(file);
-                    lock (listFiles.SyncRoot)
+                    string[] files = Directory.GetFiles(path);
+                    foreach (string file in files)
                     {
-                        listFiles.Add(file);
+                        Console.WriteLine(file);
+                        lock (listFiles.SyncRoot)
+                        {
+                            listFiles.Add(file);
+                        }
                     }
                 }
+                catch (UnauthorizedAccessException) { }
             });
             tasks[1] = Task.Run(() =>
             {
                 int threadID = Thread.CurrentThread.ManagedThreadId;
                 Console.WriteLine(threadID + " task[1]");
-                string[] directories = Directory.GetDirectories(path);
-                foreach (string directory in directories)
+                try
                 {
-                    ListDiretories(directory);
+                    string[] directories = Directory.GetDirectories(path);
+                    foreach (string directory in directories)
+                    {
+                        ListDiretories(directory);
+                    }
                 }
+                catch (UnauthorizedAccessException) { }
+
             });
             Task.WaitAll(tasks);
         }

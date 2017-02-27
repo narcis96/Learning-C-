@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SampleClasses
 {
-    class Point < T > : IComparable<Point<T>> where T : IComparable<T>
+    class Point < T > : IComparable<Point<T>> where T : struct, IComparable<T>
     {
         public Point (T x, T y)
         {
